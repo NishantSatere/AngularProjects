@@ -1,0 +1,8 @@
+<div class="button-container">
+    <button type="button" class="btn" (click)="toggleDrawer()">
+      <mat-icon class="arrow">
+        {{ (isDrawerOpen$ | async) ? 'arrow_backward' : 'arrow_forward' }}
+      </mat-icon>
+    </button>
+  </div>
+  
