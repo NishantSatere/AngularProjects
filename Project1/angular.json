@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Project1": {
+    "project1": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -35,7 +35,12 @@
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "server": "src/main.server.ts",
+            "prerender": true,
+            "ssr": {
+              "entry": "server.ts"
+            }
           },
           "configurations": {
             "production": {
@@ -65,10 +70,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "Project1:build:production"
+              "buildTarget": "project1:build:production"
             },
             "development": {
-              "buildTarget": "Project1:build:development"
+              "buildTarget": "project1:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -102,6 +107,6 @@
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": "e0152684-c01f-4431-b336-eb71f28bbe7f"
   }
 }
