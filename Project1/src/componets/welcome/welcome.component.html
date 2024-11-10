@@ -1,0 +1,7 @@
+<p>Welcome works!</p>
+<button mat-raised-button (click)="onButtonClick()">
+    <ng-container *ngIf="isLoggedIn$ | async; else loginText">Logout</ng-container>
+    <ng-template #loginText>Go to Login</ng-template>
+</button>
+  
+  

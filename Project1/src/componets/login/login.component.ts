@@ -6,11 +6,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { selectIsLoggedIn } from '../../Ngrx/Selector/LoginSelector';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { AppState } from '../../Ngrx/Selector/LoginSelector';
 import { login, logout } from '../../Ngrx/Action/loginAction';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -21,7 +23,7 @@ import { MatButtonModule } from '@angular/material/button';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   isLoggedIn$!: Observable<boolean>;
-  constructor(private fb: FormBuilder,private store: Store<{ login: any }>) {}
+  constructor(private fb: FormBuilder,private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.isLoggedIn$ = this.store.select(selectIsLoggedIn);

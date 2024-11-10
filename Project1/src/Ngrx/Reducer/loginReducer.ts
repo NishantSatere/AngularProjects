@@ -8,16 +8,18 @@ export interface LoginState {
 }
 
 export const initialState: LoginState = {
-  isLoggedIn: localStorage.getItem('token') ? true : false,
-  email: localStorage.getItem('email') || null,
-  token: localStorage.getItem('token') || null
+  isLoggedIn: typeof window !== 'undefined' && localStorage.getItem('token') ? true : false,
+  email: typeof window !== 'undefined' ? localStorage.getItem('email') || null : null,
+  token: typeof window !== 'undefined' ? localStorage.getItem('token') || null : null
 };
+
 
 export const _loginReducer = createReducer(
   initialState,
   on(login, (state, { isLoggedIn, email, token }) => {
     // Set items in localStorage and return the new state
-    localStorage.setItem('email', email);
+    // localStorage.setItem('isLoggedIn', isLoggedIn.toString());
+    // localStorage.setItem('email', email);
     localStorage.setItem('token', token);
     return { isLoggedIn, email, token };
   }),
