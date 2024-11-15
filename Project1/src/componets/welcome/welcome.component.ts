@@ -4,9 +4,9 @@ import { CommonModule } from '@angular/common';
 import { MatButton } from '@angular/material/button';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { selectIsLoggedIn } from '../../Ngrx/Selector/LoginSelector';
-import { AppState } from '../../Ngrx/Selector/LoginSelector';
-import { logout } from '../../Ngrx/Action/loginAction';
+import { selectIsLoggedIn } from '../../Ngrx/Selector/Login-Selector/LoginSelector';
+import { AppState } from '../../Ngrx/Selector/Login-Selector/LoginSelector';
+import { logout } from '../../Ngrx/Action/Login-Action/loginAction';
 
 @Component({
   selector: 'app-welcome',

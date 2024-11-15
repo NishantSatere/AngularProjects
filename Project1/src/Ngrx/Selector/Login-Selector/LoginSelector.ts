@@ -1,5 +1,5 @@
 import { createSelector } from "@ngrx/store";
-import { LoginState } from "../Reducer/loginReducer";
+import { LoginState } from "../../Reducer/Login-Reducer/loginReducer";
 
 export interface AppState {
     login: LoginState;
@@ -11,8 +11,3 @@ export const selectIsLoggedIn = createSelector(
     selectLogin,
     (state: LoginState) => state.isLoggedIn
 )
-
-// export const selectIsLoggedIn = createSelector(
-//     selectLogin,
-//     (state: loginState) => state.isLoggedIn
-// )

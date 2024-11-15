@@ -1,7 +1,14 @@
-<p>Welcome works!</p>
-<button mat-raised-button (click)="onButtonClick()">
-    <ng-container *ngIf="isLoggedIn$ | async; else loginText">Logout</ng-container>
-    <ng-template #loginText>Go to Login</ng-template>
-</button>
-  
-  
+<div class="main-div">
+    <div class="wel-div">
+        <p>
+            <span>Welcome to </span>
+            <span class="animated-span">StarterProject!</span>
+        </p>
+    </div>
+    <div>
+        <button mat-raised-button (click)="onButtonClick()">
+            <ng-container *ngIf="isLoggedIn$ | async; else loginText">Logout</ng-container>
+            <ng-template #loginText>Go to Login</ng-template>
+        </button>
+    </div>
+</div>

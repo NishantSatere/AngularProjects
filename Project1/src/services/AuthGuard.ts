@@ -3,8 +3,8 @@ import { CanActivate, Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { selectIsLoggedIn } from "../Ngrx/Selector/LoginSelector";
-import { AppState } from "../Ngrx/Selector/LoginSelector";
+import { selectIsLoggedIn } from "../Ngrx/Selector/Login-Selector/LoginSelector";
+import { AppState } from "../Ngrx/Selector/Login-Selector/LoginSelector";
 
 @Injectable({
   providedIn: 'root'

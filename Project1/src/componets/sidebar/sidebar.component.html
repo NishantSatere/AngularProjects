@@ -1,1 +1,11 @@
-<p>sidebar works!</p>
+<!-- This is the sidebar component. It is used to display the sidebar in the application. -->
+<mat-drawer-container class="example-container">
+    <mat-drawer mode="side" [opened]="isOpend">
+        Drawer content
+    </mat-drawer>
+    <mat-drawer-content>
+        <app-navbar></app-navbar>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+  </mat-drawer-container>
+  

@@ -7,12 +7,12 @@ import { provideClientHydration } from '@angular/platform-browser';
 
 // Import for ngrx store
 import { provideStore } from '@ngrx/store';
-import { _loginReducer } from '../Ngrx/Reducer/loginReducer';
+import { _loginReducer } from '../Ngrx/Reducer/Login-Reducer/loginReducer';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { SideReducer } from '../Ngrx/Reducer/SideBar-Reducer/SideReducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration(),
-    provideStore({ login: _loginReducer }), provideAnimationsAsync(),
-    
+    provideStore({ login: _loginReducer , side: SideReducer}), provideAnimationsAsync(),
   ]
 };

@@ -1,21 +1,21 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from '../componets/login/login.component';
 import { WelcomeComponent } from '../componets/welcome/welcome.component';
-import { NavSideComponent } from '../shared/nav-side/nav-side.component';
 import { EmployeesListComponent } from '../componets/employees-list/employees-list.component';
 import { EmployeeComponent } from '../componets/employee/employee.component';
 import { ErrorcomponetComponent } from '../componets/errorcomponet/errorcomponet.component';
 import { AuthGuard } from '../services/AuthGuard';
 import { RedirectIfAuthenticatedGuard } from '../services/RedirectIfAuthenticatedGuard';
+import { SidebarComponent } from '../componets/sidebar/sidebar.component';
 export const routes: Routes = [
     {
         path: '',
-        component: WelcomeComponent
-    },
-    {
-        path: '',
-        component: NavSideComponent,
+        component: SidebarComponent,
         children: [
+            {
+                path:'',
+                component: WelcomeComponent
+            },
             {
                 path: 'login',
                 component: LoginComponent,
