@@ -10,9 +10,10 @@ import { provideStore } from '@ngrx/store';
 import { _loginReducer } from '../Ngrx/Reducer/Login-Reducer/loginReducer';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { SideReducer } from '../Ngrx/Reducer/SideBar-Reducer/SideReducer';
+import { SelectePageReducer } from '../Ngrx/Reducer/SideBar-Reducer/SelectedPageReducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration(),
-    provideStore({ login: _loginReducer , side: SideReducer}), provideAnimationsAsync(),
+    provideStore({ login: _loginReducer , side: SideReducer, sidePage:SelectePageReducer}), provideAnimationsAsync(),
   ]
 };

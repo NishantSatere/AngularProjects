@@ -7,6 +7,7 @@ import { ErrorcomponetComponent } from '../componets/errorcomponet/errorcomponet
 import { AuthGuard } from '../services/AuthGuard';
 import { RedirectIfAuthenticatedGuard } from '../services/RedirectIfAuthenticatedGuard';
 import { SidebarComponent } from '../componets/sidebar/sidebar.component';
+import { ProfileComponent } from '../componets/profile/profile.component';
 export const routes: Routes = [
     {
         path: '',
@@ -29,6 +30,11 @@ export const routes: Routes = [
             {
                 path: 'employees/:id',
                 component: EmployeeComponent,
+                canActivate: [AuthGuard]
+            },
+            {
+                path:'profile',
+                component: ProfileComponent,
                 canActivate: [AuthGuard]
             }
         ],

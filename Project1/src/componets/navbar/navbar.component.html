@@ -1,2 +1,4 @@
-<button (click)="toggleDrawer()">Toggle</button>
-
+<div class="nav-bar">
+    <button (click)="toggleDrawer()">Toggle</button>
+    <button *ngIf="isLoggedin" (click) = "profile()" >Profile</button>
+</div>

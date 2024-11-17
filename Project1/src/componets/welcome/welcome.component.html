@@ -1,14 +1,27 @@
 <div class="main-div">
     <div class="wel-div">
-        <p>
-            <span>Welcome to </span>
-            <span class="animated-span">StarterProject!</span>
-        </p>
+        <div class="wel-div-sub">
+            <div >
+                <p>
+                    <span>Welcome to </span>
+                    <span class="animated-span">StarterProject!</span>
+                </p>
+            </div>
+            <div>
+                <button mat-raised-button class="btn-css" (click)="onButtonClick()">
+                    <ng-container *ngIf="isLoggedIn$ | async; else loginText">Logout</ng-container>
+                    <ng-template #loginText>Go to Login</ng-template>
+                </button>
+            </div>
+        </div>
     </div>
-    <div>
-        <button mat-raised-button (click)="onButtonClick()">
-            <ng-container *ngIf="isLoggedIn$ | async; else loginText">Logout</ng-container>
-            <ng-template #loginText>Go to Login</ng-template>
-        </button>
+    
+    <div class="wel-div2">
+        <div class="wel-div2-sub1">
+            Div1
+        </div>
+        <div class="wel-div2-sub2">
+            Div2
+        </div>
     </div>
 </div>
