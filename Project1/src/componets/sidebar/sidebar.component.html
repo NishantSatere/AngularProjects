@@ -15,11 +15,18 @@
                     <!-- <mat-icon>group</mat-icon> -->
                     <span>Employees</span>
                 </a>
+                <a *ngIf="isLoggedin" mat-button class="nav-item"
+                    [ngClass]="{'active' : (isSidePageSelected == 'profile')}" (click)="profile()">
+                    <!-- <mat-icon>group</mat-icon> -->
+                    <span>Profile</span>
+                </a>
+                
                 <a *ngIf="!isLoggedin" mat-button class="nav-item" 
-                    [ngClass]="{'active' : (isSidePageSelected == 'Login')}" (click)="login()">
+                    [ngClass]="{'active' : (isSidePageSelected == 'login')}" (click)="login()">
                     <!-- <mat-icon>group</mat-icon> -->
                     <span>Login</span>
                 </a>
+                
                 <!-- Add more nav items as needed -->
             </nav>
         </div>

@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { toggleSideBar } from '../../Action/SiderBar-Action/SideAction';
-
+import { removeSideState } from '../../Action/SiderBar-Action/SideAction';
 export interface SideState {
   isSideBarOpen: boolean;
 }
@@ -27,5 +27,9 @@ export const SideReducer = createReducer(
       localStorage.setItem('isSideBarOpen', isSideBarOpen.toString());
     }
     return updatedState;
+  }),
+  on(removeSideState, (state) => {
+    localStorage.removeItem('isSideBarOpen');
+    return { ...state, isSideBarOpen: false };
   })
 );

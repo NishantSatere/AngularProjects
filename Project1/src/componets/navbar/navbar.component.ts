@@ -7,7 +7,10 @@ import { NavState } from '../../Ngrx/Selector/Side-Selector/SideSelector';
 import { toggleSideBar } from '../../Ngrx/Action/SiderBar-Action/SideAction';
 import { selectIsSideBarOpen } from '../../Ngrx/Selector/Side-Selector/SideSelector';
 import { AppState, selectIsLoggedIn } from '../../Ngrx/Selector/Login-Selector/LoginSelector';
-import { Route } from '@angular/router';
+import { selectSelectedPage } from '../../Ngrx/Selector/Side-Selector/SelectedPageSelector';
+import { selectedPage } from '../../Ngrx/Action/SiderBar-Action/SelectedPageAction';
+import { SidePageStateGlobal } from '../../Ngrx/Selector/Side-Selector/SelectedPageSelector';
+
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -21,7 +24,7 @@ export class NavbarComponent implements OnInit {
   isLoggedIn$!: Observable<boolean>; // Observable to capture the login state
   isLoggedin!: boolean; // Local variable to store the state
 
-  constructor(private store: Store<NavState>, private store1: Store<AppState>, private router: Router) {}
+  constructor(private store: Store<NavState>, private store1: Store<AppState>, private store2: Store<SidePageStateGlobal>,private router: Router) {}
 
   ngOnInit(): void {
     this.isSideBarOpen$ = this.store.select(selectIsSideBarOpen); 
@@ -42,5 +45,6 @@ export class NavbarComponent implements OnInit {
   // route to profile page
   profile(): void {
     this.router.navigate(['profile']);
+    this.store2.dispatch(selectedPage({ page: "profile" }));
   }
 }

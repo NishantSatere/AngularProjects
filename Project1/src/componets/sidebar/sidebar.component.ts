@@ -18,7 +18,7 @@ import { selectedPage } from '../../Ngrx/Action/SiderBar-Action/SelectedPageActi
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, MatIconButton, NavbarComponent,RouterOutlet, MatDrawerContent, MatDrawerContainer, MatDrawer],
+  imports: [CommonModule, NavbarComponent,RouterOutlet, MatDrawerContent, MatDrawerContainer, MatDrawer],
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'] // Correct typo: changed to styleUrls
 })
@@ -61,6 +61,11 @@ export class SidebarComponent {
   employees() {
     this.router.navigate(['employees']);
     this.store2.dispatch(selectedPage({page: "employees"}));
+  }
+
+  profile(){
+    this.router.navigate(['profile']);
+    this.store2.dispatch(selectedPage({page: "profile"}));
   }
 
   login(){

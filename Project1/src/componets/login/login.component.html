@@ -1,5 +1,8 @@
-<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-    <mat-form-field appearance="fill">
+<div class="main-div">
+  <div class="main-sub-div">
+  <form class="form-content" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <h3>LOGIN</h3>
+    <mat-form-field appearance="fill" class="email-field">
       <mat-label>Email</mat-label>
       <input matInput id="email" type="email" formControlName="email" />
       <mat-error *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
@@ -7,17 +10,18 @@
         <span *ngIf="loginForm.get('email')?.hasError('email')">Invalid email format.</span>
       </mat-error>
     </mat-form-field>
-  
-    <mat-form-field appearance="fill">
+
+    <mat-form-field appearance="fill" class="password-field">
       <mat-label>Password</mat-label>
       <input matInput id="password" type="password" formControlName="password" />
       <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
         <span *ngIf="loginForm.get('password')?.hasError('required')">Password is required.</span>
-        <span *ngIf="loginForm.get('password')?.hasError('minlength')">Password must be at least 8 characters long.</span>
+        <span *ngIf="loginForm.get('password')?.hasError('minlength')">Password must be at least 8 characters
+          long.</span>
       </mat-error>
     </mat-form-field>
-  
-    <button mat-raised-button type="submit" [disabled]="loginForm.invalid">Login</button>
+    <button mat-raised-button type="submit" class="login-btn" [disabled]="loginForm.invalid">Login</button>
   </form>
-
-  <!-- <button mat-raised-button (click)="onLogout()">logout</button> -->
+</div>
+</div>
+<!-- <button mat-raised-button (click)="onLogout()">logout</button> -->
