@@ -1,1 +1,26 @@
-<p>employee works!</p>
+<div class="main-container">
+    <div class="actual-content">
+        <div *ngIf="isLoading" class="loading-spinner">
+            <div class="spinner"></div>
+            Loading...
+        </div>
+        <div *ngIf="errorMessage" class="error-message">
+            <p>{{ errorMessage }}</p>
+        </div>
+
+        <div *ngIf="!isLoading" class="employee-card">
+            <img class="avatar"
+                src="https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1122.jpg" />
+            <h2 class="employee-name">{{employee.employee_name}}</h2>
+            <p class="employee-role">{{employee.employee_role}}</p>
+            <p class="employee-salary">Salary: {{employee.employee_salary| SalaryConverator}}</p>
+            <p class="joining-date">Joining Date: {{employee.joining_date| CustomDatePipe}}</p>
+            <p class="employee-address">
+                Address: {{ employee.address_city| AddressPipe: employee.address_pincode }}
+            </p>
+            <p class="age">{{ employee.age | AgePipe }}</p>
+            <p class="phone-number">Phone No.: {{employee.phone_number}}</p>
+            <p class="gender">Gender: {{employee.gender}}</p>
+        </div>
+    </div>
+</div>

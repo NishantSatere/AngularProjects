@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       this.router.navigate(['/employees']);
-      this.store.dispatch(login({ isLoggedIn: true, email,token: 'dummy'}));
+      this.store.dispatch(login({ isLoggedIn: true, email: email, token: 'dummy'}));
       this.store1.dispatch(selectedPage({ page: "employees" }));
       // this.store2.dispatch(removeSideState());
     }

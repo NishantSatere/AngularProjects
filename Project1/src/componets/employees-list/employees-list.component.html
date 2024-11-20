@@ -1,1 +1,30 @@
-<p>employees-list works!</p>
+<div class="container">
+    <div class="table-desgin">
+        <div *ngIf="isLoading" class="loading-spinner">
+            <div class="spinner"></div>
+            Loading...
+        </div>
+        <div *ngIf="errorMessage" class="error-message">
+            <p>{{ errorMessage }}</p>
+        </div>
+        <table *ngIf="!isLoading">
+            <thead>
+                <tr class="heading">
+                    <th class="th-content">SrNo.</th>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Joining Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr (click)="employeeData(employee)" [ngClass]="{ 'oddRow': i % 2 !== 0, 'evenRow': i % 2 === 0 }"
+                    *ngFor="let employee of employees, let i = index">
+                    <td class="th-content">{{i + 1}}</td>
+                    <td>{{ employee.employee_name }}</td>
+                    <td>{{ employee.employee_role }}</td>
+                    <td>{{ employee.joining_date}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

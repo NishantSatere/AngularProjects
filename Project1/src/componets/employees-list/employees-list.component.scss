@@ -1,0 +1,49 @@
+.container{
+    padding-bottom: 40px;
+}
+.table-desgin {
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden; /* Ensure that rounded corners work */
+  }
+  
+  .heading {
+    background-color: rgb(33, 31, 31);
+    background-color: #e0e0e0;
+    color: black;
+  }
+  
+  table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+    table-layout: fixed;  
+  }
+
+  th, td {
+    padding: 10px;
+    text-align: center;  /* Centers the content within each cell */
+    border-left: 0.5px solid #cec8c8; /* Left border for each cell */
+    border-right: 0.5px solid #cec8c8; /* Right border for each cell */
+  }
+  
+  .evenRow {
+    background-color: #ffffff;
+    // background-color: #f1f1f1;
+  }
+
+  .evenRow:hover{
+    background-color: #f1f1f1;
+  }
+  
+  .oddRow {
+    background-color: #e0e0e0;
+    // background-color: #f1f1f1;
+  }
+
+  .oddRow:hover{
+    background-color: #f1f1f1;
+  }
+  
+  
+  

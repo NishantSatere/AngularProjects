@@ -1,0 +1,62 @@
+.main-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 50px;
+  }
+  
+  .actual-content {
+    display: flex;
+    flex-direction: column; // Stack the content vertically
+    align-items: center; // Center content horizontally
+    background-color: #ffffff;
+    border-radius: 20px;
+    width: 50%;
+    height: auto; // Adjust height based on content
+    margin: 10px;
+    margin-bottom: 50px;
+  
+    .employee-card {
+      width: 90%; // Constrain content width for better alignment
+      margin: 20px auto;
+      text-align: center;
+  
+      .avatar {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin-bottom: 15px;
+        border: 2px solid #e0e0e0; // Subtle border around the avatar
+      }
+  
+      .employee-name {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 5px;
+      }
+  
+      .employee-role {
+        font-size: 1.2rem;
+        color: #777;
+        margin-bottom: 15px;
+      }
+  
+      .employee-salary,
+      .joining-date,
+      .employee-address,
+      .phone-number,
+      .age,
+      .gender {
+        font-size: 1rem;
+        color: #555;
+        margin: 5px 0;
+      }
+  
+      .employee-address {
+        line-height: 1.6; // Add space for multiline address
+      }
+    }
+  }
+  
