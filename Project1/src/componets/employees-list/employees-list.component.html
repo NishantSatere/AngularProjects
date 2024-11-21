@@ -1,4 +1,9 @@
 <div class="container">
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" placeholder="Search by Name" (input)="onSearchChange($event)" />
+        </div>
+    </div>
     <div class="table-desgin">
         <div *ngIf="isLoading" class="loading-spinner">
             <div class="spinner"></div>
@@ -18,7 +23,7 @@
             </thead>
             <tbody>
                 <tr (click)="employeeData(employee)" [ngClass]="{ 'oddRow': i % 2 !== 0, 'evenRow': i % 2 === 0 }"
-                    *ngFor="let employee of employees, let i = index">
+                    *ngFor="let employee of filteredEmployees, let i = index">
                     <td class="th-content">{{i + 1}}</td>
                     <td>{{ employee.employee_name }}</td>
                     <td>{{ employee.employee_role }}</td>

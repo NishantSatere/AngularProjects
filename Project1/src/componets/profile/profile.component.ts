@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { Router } from '@angular/router';
-
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from '../../Ngrx/Selector/Login-Selector/LoginSelector';
@@ -20,7 +19,8 @@ import { NavState } from '../../Ngrx/Selector/Side-Selector/SideSelector';
 })
 export class ProfileComponent {
   constructor(private store: Store<AppState>, private store1: Store<SidePageStateGlobal>, private store2: Store<NavState>, private router: Router) {}
-
+  email!:string | null
+  token!:string | null
   isSidePageSelected$!: Observable<string>;
   isSidePageSelected!: string;
 
@@ -30,6 +30,8 @@ export class ProfileComponent {
     this.isSidePageSelected$.subscribe((data) => {
       this.isSidePageSelected = data;
     })
+    this.email = localStorage.getItem('email')
+    this.token = localStorage.getItem('token')
   }
 
   onLogout(): void {

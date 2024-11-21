@@ -13,6 +13,7 @@
     width: 50%;
     height: 50%;
     border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .main-div-content{
@@ -25,8 +26,9 @@
 }
 
 .title{
-    font-size: 30px;
+    font-size: 25px;
     font-weight: bold;
+    color: #333;
     margin-bottom: 20px;
 }
 
@@ -42,13 +44,23 @@
     font-size: 15px;
 }
 
+.email {
+    font-size: 1rem;
+    // font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+  }
+
 .logout-btn{
     margin: 10px;
+    margin-top: 10px;
     font-family: 'Poppins', sans-serif;
     border-radius: 10px;
     font-size: medium;
     color: #f6f2f2 !important;
     background-color: #0e0e0e !important; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease; 
 }
 
 .logout-btn:hover{

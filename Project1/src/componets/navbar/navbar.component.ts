@@ -7,14 +7,15 @@ import { NavState } from '../../Ngrx/Selector/Side-Selector/SideSelector';
 import { toggleSideBar } from '../../Ngrx/Action/SiderBar-Action/SideAction';
 import { selectIsSideBarOpen } from '../../Ngrx/Selector/Side-Selector/SideSelector';
 import { AppState, selectIsLoggedIn } from '../../Ngrx/Selector/Login-Selector/LoginSelector';
-import { selectSelectedPage } from '../../Ngrx/Selector/Side-Selector/SelectedPageSelector';
+// import { selectSelectedPage } from '../../Ngrx/Selector/Side-Selector/SelectedPageSelector';
 import { selectedPage } from '../../Ngrx/Action/SiderBar-Action/SelectedPageAction';
 import { SidePageStateGlobal } from '../../Ngrx/Selector/Side-Selector/SelectedPageSelector';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,MatIconModule],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })

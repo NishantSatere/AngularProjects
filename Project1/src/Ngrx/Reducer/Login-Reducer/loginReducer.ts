@@ -19,7 +19,7 @@ export const _loginReducer = createReducer(
   on(login, (state, { isLoggedIn, email, token }) => {
     // Set items in localStorage and return the new state
     // localStorage.setItem('isLoggedIn', isLoggedIn.toString());
-    // localStorage.setItem('email', email);
+    localStorage.setItem('email', email);
     localStorage.setItem('token', token);
     return { isLoggedIn, email, token };
   }),

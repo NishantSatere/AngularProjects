@@ -1,4 +1,4 @@
-.nav-bar{
+.nav-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -7,5 +7,22 @@
     font-size: 1.25rem;
     font-weight: bold;
     text-align: center;
-    // border-bottom: 1px solid #e0e0e0;
+
+    button {
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        
+        &:hover {
+            mat-icon {
+                color: #b1aeae;
+            }
+        }
+    }
+
+    mat-icon {
+        font-size: 26px;
+        color: #000;
+        transition: color 0.3s ease;
+    }
 }
