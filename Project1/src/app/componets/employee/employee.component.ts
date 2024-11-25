@@ -4,6 +4,7 @@ import { getEmployee } from '../../services/employeeDataServices/getEmployee';
 import { Employee } from '../../services/employeeDataServices/employeeModel';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { HighlightOnHoverDirective } from '../../directive/HighlightOnHover';
 import { AgePipe,
   SalaryConverator,
   CustomDatePipe,
@@ -12,7 +13,7 @@ import { AgePipe,
 @Component({
   selector: 'app-employee',
   standalone: true,
-  imports: [CommonModule,AgePipe,SalaryConverator,CustomDatePipe,AddressPipe],
+  imports: [CommonModule,AgePipe,SalaryConverator,CustomDatePipe,AddressPipe,HighlightOnHoverDirective],
   templateUrl: './employee.component.html',
   styleUrl: './employee.component.scss'
 })

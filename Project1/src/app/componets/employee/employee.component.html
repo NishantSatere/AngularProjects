@@ -1,5 +1,5 @@
-<div class="main-container">
-    <div class="actual-content">
+<div class="main-container" >
+    <div class="actual-content" appHighlightOnHover>
         <div *ngIf="isLoading" class="loading-spinner">
             <div class="spinner"></div>
             Loading...
@@ -8,10 +8,10 @@
             <p>{{ errorMessage }}</p>
         </div>
 
-        <div *ngIf="!isLoading" class="employee-card">
+        <div *ngIf="!isLoading" class="employee-card" >
             <img class="avatar"
                 src="https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1122.jpg" />
-            <h2 class="employee-name">{{employee.employee_name}}</h2>
+            <h2 class="employee-name" >{{employee.employee_name}}</h2>
             <p class="employee-role">{{employee.employee_role}}</p>
             <p class="employee-salary">Salary: {{employee.employee_salary| SalaryConverator}}</p>
             <p class="joining-date">Joining Date: {{employee.joining_date| CustomDatePipe}}</p>
