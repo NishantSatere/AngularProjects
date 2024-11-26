@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES6",                           // Targeting ES6
+    "module": "commonjs",                      // Module system as CommonJS
+    "strict": true,                             // Enable strict type checking options
+    "esModuleInterop": true,                    // Allows default imports from modules without a default export
+    "skipLibCheck": true,                       // Skips type checking of declaration files
+    "forceConsistentCasingInFileNames": true,   // Ensures consistent file naming case
+    "outDir": "./dist"                          // Compiled files will be placed in the 'dist' folder
+  },
+  "include": [
+    "src/**/*"                                  // Includes all files under 'src' folder for compilation
+  ],
+  "exclude": [
+    "node_modules"                              // Excludes the node_modules folder
+  ]
+}
