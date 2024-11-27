@@ -135,7 +135,7 @@ const getEmployeeDetails = asyncHandler(async (req: Request, res: Response, next
             return res.status(400).json({ message: "Invalid ID parameter" });
         }
         // console.log("Employee ID:", id);
-        
+
         const employee = await Employee.findOne({ where: { employee_id: id } });
         if (!employee) {
             return res.status(404).json({ message: "Employee not found" });
@@ -148,9 +148,93 @@ const getEmployeeDetails = asyncHandler(async (req: Request, res: Response, next
     }
 });
 
+const deleteEmployee = asyncHandler(async (req: Request, res: Response, next) => {
+    try {
+        const id: number = parseInt(req.params.id)
+        if (isNaN(id)) {
+            return res.status(400).json({ message: "Invalid ID parameter" });
+        }
+
+        const employee = await Employee.findOne({ where: { employee_id: id } })
+        if (!employee) {
+            return res.status(404).json({ message: "Employee not found" });
+        }
+
+        await Employee.destroy({ where: { employee_id: id } });
+        return res.status(200).json({ message: "Employee deleted successfully" });
+    } catch (error) {
+
+    }
+})
+
+const addEmployee = asyncHandler(async (req: Request, res: Response) => {
+    try {
+        const {
+            name,
+            avtar,
+            gender,
+            dob,
+            email,
+            phone,
+            city,
+            state,
+            country,
+            zip,
+            joining_date,
+            role,
+            salary
+        } = req.body;
+
+        // Validate email
+        await check('email')
+            .isEmail()
+            .withMessage("Invalid email format")
+            .custom((value) => value.endsWith('gmail.com'))
+            .withMessage("Email must end with 'gmail.com'")
+            .run(req);
+
+        // Collect validation errors
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        // Check if the email is already registered
+        const isExistingAdmin = await Employee.findOne({ where: { employee_email: email } });
+        if (isExistingAdmin) {
+            return res.status(400).json({ msg: "Email already registered" });
+        }
+
+        // Create a new employee record
+        const newEmployee = await Employee.create({
+            employee_name: name,
+            employee_avtar: avtar,
+            employee_gender: gender,
+            employee_dob: dob,
+            employee_email: email,
+            employee_phone: phone,
+            employee_city: city,
+            employee_state: state,
+            employee_country: country,
+            employee_zip: zip,
+            employee_joining_date: joining_date,
+            employee_role: role,
+            employee_salary: salary
+        });
+
+        return res.status(201).json({ newEmployee });
+    } catch (error) {
+        console.error("Error adding employee:", error);
+        return res.status(500).json({ msg: "Failed to add employee", error });
+    }
+});
+
+
 export {
     RegisterAdmin,
     LoginAdmin,
     getAllEmployees,
-    getEmployeeDetails
+    getEmployeeDetails,
+    deleteEmployee,
+    addEmployee
 }
