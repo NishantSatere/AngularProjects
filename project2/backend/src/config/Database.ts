@@ -1,15 +1,15 @@
 import { Sequelize } from "sequelize";
 
 const sequelize = new Sequelize(
-    'eds', // mysqldatabase name
+    'eds', // MySQL database name
     'root', // username
-    'Nishant@123', // password{
+    'Nishant@123', // password
     {
-        'dialect': 'mysql',
-        'host': '127.0.0.1',
-        logging: console.log,
-    })
-
+        host: '127.0.0.1',
+        dialect: 'mysql',
+        logging: console.log, // Enable logging to debug SQL queries
+    }
+);
 
 const connectToDatabase = async () => {
     try {
@@ -18,9 +18,6 @@ const connectToDatabase = async () => {
     } catch (error) {
         console.error('Unable to connect to the database:', error);
     }
-}
-
-export {
-    sequelize,
-    connectToDatabase
 };
+
+export { sequelize, connectToDatabase };
