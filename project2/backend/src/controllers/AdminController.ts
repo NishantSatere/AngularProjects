@@ -3,9 +3,11 @@ import { Request, Response } from "express";
 import Admin from "../models/admin";
 import { IEmployee } from "../models/employees";
 import Employee from "../models/employees";
-import { validationResult, check } from "express-validator";
+import { validationResult, check, header } from "express-validator";
 import asyncHandler from "../helpers/asyncHandler";
 import jwt from "jsonwebtoken"
+import Busboy from "busboy";
+import { generateUploadUrl } from "../services/S3clientConfig"
 
 const RegisterAdmin = asyncHandler(async (req: Request, res: Response, next) => {
     try {
@@ -169,63 +171,125 @@ const deleteEmployee = asyncHandler(async (req: Request, res: Response, next) =>
 
 const addEmployee = asyncHandler(async (req: Request, res: Response) => {
     try {
-        const {
-            name,
-            avtar,
-            gender,
-            dob,
-            email,
-            phone,
-            city,
-            state,
-            country,
-            zip,
-            joining_date,
-            role,
-            salary
-        } = req.body;
-
-        // Validate email
-        await check('email')
-            .isEmail()
-            .withMessage("Invalid email format")
-            .custom((value) => value.endsWith('gmail.com'))
-            .withMessage("Email must end with 'gmail.com'")
-            .run(req);
-
-        // Collect validation errors
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+        const contentType = req.headers["content-type"] || "";
+        if (!contentType.includes("multipart/form-data")) {
+            return res.status(400).send({ msg: "Invalid Content-Type" });
         }
 
-        // Check if the email is already registered
-        const isExistingAdmin = await Employee.findOne({ where: { employee_email: email } });
-        if (isExistingAdmin) {
-            return res.status(400).json({ msg: "Email already registered" });
-        }
+        const busboy = Busboy({ headers: req.headers });
+        const formData: Record<string, any> = {};
+        const files: { fieldname: string; filename: string; presignedURL: string; buffer: Buffer; }[] = [];
 
-        // Create a new employee record
-        const newEmployee = await Employee.create({
-            employee_name: name,
-            employee_avtar: avtar,
-            employee_gender: gender,
-            employee_dob: dob,
-            employee_email: email,
-            employee_phone: phone,
-            employee_city: city,
-            employee_state: state,
-            employee_country: country,
-            employee_zip: zip,
-            employee_joining_date: joining_date,
-            employee_role: role,
-            employee_salary: salary
+        let updatedFileName: string;
+
+        busboy.on("file", (fieldname: string, file: NodeJS.ReadableStream, filename: string, encoding: string, mimetype: string) => {
+            const chunks: Buffer[] = [];
+
+            const generateUniqueFileName = (filename: any) => {
+                filename = filename.filename;
+                const baseName = filename.includes(".") ? filename.substring(0, filename.lastIndexOf(".")) : filename;
+                const extension = filename.includes(".") ? filename.substring(filename.lastIndexOf(".")) : "";
+                return `${baseName}-${Date.now()}${extension}`;
+            };
+
+            filename = generateUniqueFileName(filename);
+            updatedFileName = filename;
+
+            file.on("data", (chunk) => {
+                chunks.push(chunk);
+            });
+
+            const buffer = Buffer.concat(chunks);
+
+            file.on("end", async () => {
+                try {
+                    // Extract form data
+                    const { name, email, gender, dob, phone, city, state, country, zip, joining_date, role, salary } = formData;
+
+                    if (!name || !email) {
+                        return res.status(400).send({ msg: "Name and email are required" });
+                    }
+
+                    // Check if employee already exists
+                    const isExistingEmployee = await Employee.findOne({ where: { employee_email: email } });
+                    if (isExistingEmployee) {
+                        return res.status(400).json({ msg: "Email already registered" });
+                    }
+
+                    // Now that email is not registered, proceed with the file upload
+
+                    // Generate presigned URL
+                    const presignedURL = await generateUploadUrl(filename, mimetype);
+                    console.log('Generated Presigned URL:', presignedURL);
+
+                    // Upload file to presigned URL
+                    const response = await fetch(presignedURL, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': mimetype },
+                        body: buffer,
+                    });
+
+                    if (!response.ok) {
+                        const errorMessage = await response.text();
+                        console.error('Failed to upload file:', errorMessage);
+                        return res.status(500).json({ msg: 'File upload failed', error: errorMessage });
+                    }
+
+                    // If upload is successful, push file data and presigned URL into the files array
+                    files.push({
+                        fieldname,
+                        filename: updatedFileName,
+                        presignedURL,
+                        buffer
+                    });
+
+                    // Create new employee record in database
+                    const newEmployee = await Employee.create({
+                        employee_name: name,
+                        employee_avtar: updatedFileName,
+                        employee_gender: gender,
+                        employee_dob: dob,
+                        employee_email: email,
+                        employee_phone: phone,
+                        employee_city: city,
+                        employee_state: state,
+                        employee_country: country,
+                        employee_zip: zip,
+                        employee_joining_date: joining_date,
+                        employee_role: role,
+                        employee_salary: salary,
+                    });
+
+                    // Respond with success
+                    res.status(200).send({ newEmployee, files });
+
+                } catch (err: unknown) {
+                    console.error('Error during file upload or database operation:', err);
+                    if (err instanceof Error) {
+                        return res.status(500).json({ msg: 'Error during file upload or database operation', error: err.message });
+                    } else {
+                        return res.status(500).json({ msg: "Error during file upload or database operation" });
+                    }
+                }
+            });
         });
 
-        return res.status(201).json({ newEmployee });
-    } catch (error) {
-        console.error("Error adding employee:", error);
-        return res.status(500).json({ msg: "Failed to add employee", error });
+        busboy.on("field", (fieldname, value) => {
+            formData[fieldname] = value;
+        });
+
+        busboy.on("finish", async () => {
+            // Ensure name and email are provided before finishing
+            if (!formData.name || !formData.email) {
+                return res.status(400).send({ msg: "Name and email are required" });
+            }
+        });
+
+        req.pipe(busboy);
+
+    } catch (err) {
+        console.error('Error adding employee:', err);
+        return res.status(500).json({ msg: 'Failed to add employee', error: err });
     }
 });
 
