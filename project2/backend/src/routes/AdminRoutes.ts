@@ -16,6 +16,7 @@ adminRouter.post('/login', LoginAdmin)
 adminRouter.get('/employees',adminAuth,getAllEmployees)
 adminRouter.get('/employees/:id', adminAuth, getEmployeeDetails)
 adminRouter.delete('/employees/:id', adminAuth, deleteEmployee)
-adminRouter.post('/addemployee',addEmployee)
+adminRouter.post('/addemployee',adminAuth,addEmployee)
+
 
 

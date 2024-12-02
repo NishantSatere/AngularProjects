@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
-import { S3Client } from "@aws-sdk/client-s3";
-import { PutObjectCommand } from "@aws-sdk/client-s3";
+import {  S3Client } from "@aws-sdk/client-s3";
+import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 dotenv.config()
@@ -24,3 +24,12 @@ export const generateUploadUrl = async (filename: string, contentType:string) =>
     return url
 }
 
+export const getImageUrl = async (filename: string) => {
+    const command = new GetObjectCommand({
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: `upload/user/${filename}`
+    })
+
+    const url = await getSignedUrl(s3client,command,{expiresIn:3600})
+    return url
+}

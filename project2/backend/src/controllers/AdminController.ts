@@ -7,7 +7,7 @@ import { validationResult, check, header } from "express-validator";
 import asyncHandler from "../helpers/asyncHandler";
 import jwt from "jsonwebtoken"
 import Busboy from "busboy";
-import { generateUploadUrl } from "../services/S3clientConfig"
+import { generateUploadUrl, getImageUrl } from "../services/S3clientConfig"
 
 const RegisterAdmin = asyncHandler(async (req: Request, res: Response, next) => {
     try {
@@ -139,6 +139,10 @@ const getEmployeeDetails = asyncHandler(async (req: Request, res: Response, next
         // console.log("Employee ID:", id);
 
         const employee = await Employee.findOne({ where: { employee_id: id } });
+        // console.log("Employee details:", employee?.dataValues.employee_avtar);
+        // const imageName = employee.?employee_avtar || "default.jpg";
+        const getPresignedURL = await getImageUrl(employee?.dataValues.employee_avtar || "default.jpg");
+        console.log("Presigned URL:", getPresignedURL);
         if (!employee) {
             return res.status(404).json({ message: "Employee not found" });
         }
@@ -184,7 +188,6 @@ const addEmployee = asyncHandler(async (req: Request, res: Response) => {
 
         busboy.on("file", (fieldname: string, file: NodeJS.ReadableStream, filename: string, encoding: string, mimetype: string) => {
             const chunks: Buffer[] = [];
-
             const generateUniqueFileName = (filename: any) => {
                 filename = filename.filename;
                 const baseName = filename.includes(".") ? filename.substring(0, filename.lastIndexOf(".")) : filename;
@@ -199,9 +202,9 @@ const addEmployee = asyncHandler(async (req: Request, res: Response) => {
                 chunks.push(chunk);
             });
 
-            const buffer = Buffer.concat(chunks);
-
             file.on("end", async () => {
+                const buffer = Buffer.concat(chunks);
+                // console.log('Buffer length:', buffer.length);
                 try {
                     // Extract form data
                     const { name, email, gender, dob, phone, city, state, country, zip, joining_date, role, salary } = formData;
@@ -278,11 +281,8 @@ const addEmployee = asyncHandler(async (req: Request, res: Response) => {
             formData[fieldname] = value;
         });
 
-        busboy.on("finish", async () => {
-            // Ensure name and email are provided before finishing
-            if (!formData.name || !formData.email) {
-                return res.status(400).send({ msg: "Name and email are required" });
-            }
+        busboy.on("finish", () => {
+            console.log("file upload completed");
         });
 
         req.pipe(busboy);
